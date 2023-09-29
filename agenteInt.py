@@ -65,17 +65,20 @@ class Agentes:
     def encontrar_objeto(self, nombre_objeto, posx, posy):
         match nombre_objeto:
             case "A":
+                if self.objeto_encontrado ['agI'] != 'X':
+                    self.memoria_agente[self.objeto_encontrado['agI'][0]][self.objeto_encontrado['agI'][1]] = 1
                 self.objeto_encontrado ['agI'] = posx,posy
                 return 'agI'
 
             case "G":
+                if self.objeto_encontrado ['gumpy'] != 'X':
+                    self.memoria_agente[self.objeto_encontrado['gumpy'][0]][self.objeto_encontrado['gumpy'][1]] = 1
                 self.objeto_encontrado['gumpy'] = posx,posy
                 return 'gumpy'
 
             case "P1":
                 self.objeto_encontrado['pozo1'] = posx,posy
                 return 'pozo1'
-            
             
             case "P2":
                 self.objeto_encontrado['pozo2'] = posx,posy
@@ -87,27 +90,46 @@ class Agentes:
 
     # Función para mover el agente
     def mover_agente(self, tablero):
-
+        inicial = 'X'
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]  # Abajo, arriba, derecha, izquierda
         random.shuffle(directions)
+        new_x = -1
+        new_y = -1
 
         for dx, dy in directions:
-
-            new_x, new_y = self.posicion[0] + dx, self.posicion[1] + dy
+            n_x, n_y = self.posicion[0] + dx, self.posicion[1] + dy
             #poner lo de gumpy y agi
-            if is_valid(new_x, new_y) or tablero[new_x][new_y] == ' ' :
+            if is_valid(n_x, n_y):
                 if self.nombre == 'gumpy':
-                    if tablero[new_x][new_y] == 'A':
-                        pass
+                    inicial = 'G'
+                    if tablero[n_x][n_y] == 'A':
+                        new_x, new_y = n_x, n_y 
+                        break
+                    elif tablero[n_x][n_y] == ' ':
+                        if self.memoria_agente[n_x][n_y] == 0:
+                            new_x, new_y = n_x, n_y 
+                            continue
+                        elif self.memoria_agente[n_x][n_y] == 1:
+                            new_x, new_y = n_x, n_y 
+                            continue
 
-                self.memoria_agente [self.posicion[0]][self.posicion[1]] = 1
-                tablero[self.posicion[0]][self.posicion[1]] = ' '
-                self.posicion = new_x, new_y #Actualizamos la posición del agente
-
-                if self.nombre == 'gumpy':
-                    tablero[self.posicion[0]][self.posicion[1]] = 'G' 
                 elif self.nombre == 'agI':
-                    tablero[self.posicion[0]][self.posicion[1]] = 'A' 
+                    inicial = 'A'
+                    if tablero[n_x][n_y] == 'T':
+                        new_x, new_y = n_x, n_y 
+                        break
+                    elif tablero[n_x][n_y] == ' ':
+                        if self.memoria_agente[n_x][n_y] == 0:
+                            new_x, new_y = n_x, n_y 
+                            continue
+                        elif self.memoria_agente[n_x][n_y] == 1:
+                            new_x, new_y = n_x, n_y 
+                            continue
+
+        self.memoria_agente[self.posicion[0]][self.posicion[1]] = 1
+        tablero[self.posicion[0]][self.posicion[1]] = ' '
+        self.posicion = new_x, new_y
+        tablero[self.posicion[0]][self.posicion[1]] = inicial 
         return tablero
 
 def is_valid(x, y):

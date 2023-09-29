@@ -3,6 +3,8 @@ import time
 from agenteInt import Agentes
 from juego import Juego
 
+global juego
+global agI 
 juego = 0
 opcion = 0
 puntaje = 0
@@ -33,7 +35,6 @@ def mostrar_menu():
 2. Nuevo juego
 3. Salir""")
     
-    global juego 
     global opcion 
     
     opcion = input('Ingrese su opcion:')
@@ -62,40 +63,45 @@ while True:
     if opcion == 0 or keyboard.is_pressed('p'):
         mostrar_menu()
 
-
+    
     if juego != 0:
+        print('ppp')
         if movimientos == 0:
             inicio = True 
         else:
             inicio = False
+            print('prueba1')
             tablero = agI.mover_agente(juego.tablero)
             if movimientos % 2 == 0:
+                print('prueba2')
                 tablero = gumpy.mover_agente(juego.tablero)
-                
             
         juego.imprimir_tablero()
 
+        print(agI.mostrar_stats(juego.tablero, inicio, puntaje))
+        print(gumpy.mostrar_stats(juego.tablero, inicio, puntaje))
 
-    print(agI.mostrar_stats(juego.tablero, inicio, puntaje))
-    print(gumpy.mostrar_stats(juego.tablero, inicio, puntaje))
-
-    # Verificar si el agente llegó al tesoro
-    if (agI.posicion) == (tesoro):
-        print("¡El agente ha encontrado el tesoro y ha ganado!")
-        puntaje += 1000
-        nuevo_juego()
-    
-    # Verificar si el gumpy atrapó al agente
-    if (agI.posicion) == (gumpy.posicion):
-        print("¡El agente ha sido atrapado por el gumpy y ha perdido!")
-        puntaje -= 1000
-        intentos -= 1
-        movimientos = 1
-        nuevo_juego()
+        # Verificar si el agente llegó al tesoro
+        if (agI.posicion) == (tesoro):
+            print("¡El agente ha encontrado el tesoro y ha ganado!")
+            puntaje += 1000
+            juego.tablero = [[' ' for _ in range(5)] for _ in range(5)]
+            juego.posicionar_objetos()
+            #falta poner que cuando gane pueda seguir jugando con su puntaje
+            mostrar_menu()
         
-    print(f'Intentos: {intentos} \nMovimientos {movimientos} \nPuntaje: {puntaje}')
-    movimientos += 1
-    puntaje -= 1
+        # Verificar si el gumpy atrapó al agente
+        if (agI.posicion) == (gumpy.posicion):
+            print("¡El agente ha sido atrapado por el gumpy y ha perdido!")
+            puntaje -= 1000
+            intentos -= 1
+            movimientos = -1
+            agI = Agentes('agI', [4,0])
+            gumpy = Agentes('gumpy', juego.gumpy)
+        
+        print(f'Intentos: {intentos} \nMovimientos {movimientos} \nPuntaje: {puntaje}')
+        movimientos += 1
+        puntaje -= 1
 
     if(velocidad == 0):
         velocidad = 0.4
