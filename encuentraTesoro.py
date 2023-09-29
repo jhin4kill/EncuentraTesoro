@@ -107,4 +107,3 @@ while True:
         velocidad = 0.4
     time.sleep(velocidad)
     
-#Cambio ddd
