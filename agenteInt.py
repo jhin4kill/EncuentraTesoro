@@ -76,6 +76,7 @@ class Agentes:
                 self.objeto_encontrado['pozo1'] = posx,posy
                 return 'pozo1'
             
+            
             case "P2":
                 self.objeto_encontrado['pozo2'] = posx,posy
                 return 'pozo2'
