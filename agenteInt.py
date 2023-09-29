@@ -154,9 +154,13 @@ class Agentes:
                         continue
                     """
 <<<<<<< HEAD
+<<<<<<< HEAD
                     
 =======
 >>>>>>> b072ad8 (Jese cambios)
+=======
+                    
+>>>>>>> cd47ff1 (pruebanagel)
 
                     if tablero[n_x][n_y] == 'T':
                         new_x, new_y = n_x, n_y 
