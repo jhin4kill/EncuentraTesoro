@@ -10,7 +10,6 @@ class Juego:
         self.gumpy = self.posicionar_objetos() 
         self.tesoro = tesoro
         
-
     # Función para imprimir el tablero
     def imprimir_tablero(self):
         print('\n' * 3)
