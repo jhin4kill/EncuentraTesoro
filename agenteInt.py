@@ -153,7 +153,10 @@ class Agentes:
                         new_x, new_y = n_x, n_y+1
                         continue
                     """
+<<<<<<< HEAD
                     
+=======
+>>>>>>> b072ad8 (Jese cambios)
 
                     if tablero[n_x][n_y] == 'T':
                         new_x, new_y = n_x, n_y 
