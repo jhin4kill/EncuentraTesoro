@@ -1,3 +1,4 @@
+import os
 import random
 
 #AGENTES
@@ -38,6 +39,7 @@ class Agentes:
         for key, valor in self.objeto_encontrado.items():
             print(key, ':', valor, end=' || ')
 
+
 #SENSORES
     def sensores(self, tablero, inicio):
         if inicio:
@@ -65,15 +67,21 @@ class Agentes:
     def encontrar_objeto(self, nombre_objeto, posx, posy):
         match nombre_objeto:
             case "A":
-                if self.objeto_encontrado ['agI'] != 'X':
-                    self.memoria_agente[self.objeto_encontrado['agI'][0]][self.objeto_encontrado['agI'][1]] = 1
                 self.objeto_encontrado ['agI'] = posx,posy
+                if self.nombre == 'agI':
+                    pass
+                else:
+                    if self.objeto_encontrado['agI'] != 'X':
+                        self.memoria_agente[self.objeto_encontrado['agI'][0]][self.objeto_encontrado['agI'][1]] = 1
                 return 'agI'
 
             case "G":
-                if self.objeto_encontrado ['gumpy'] != 'X':
-                    self.memoria_agente[self.objeto_encontrado['gumpy'][0]][self.objeto_encontrado['gumpy'][1]] = 1
                 self.objeto_encontrado['gumpy'] = posx,posy
+                if self.nombre == 'gumpy':
+                    pass
+                else:
+                    if self.objeto_encontrado['gumpy'] != 'X':
+                        self.memoria_agente[self.objeto_encontrado['gumpy'][0]][self.objeto_encontrado['gumpy'][1]] = 1
                 return 'gumpy'
 
             case "P1":
