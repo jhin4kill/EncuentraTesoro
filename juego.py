@@ -37,4 +37,3 @@ class Juego:
         
         return gumpy
     
-
